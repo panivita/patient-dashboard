@@ -49,3 +49,6 @@ export const PatientDetailsSection = ({
     </section>
   );
 };
+
+//We need create form for submit choosen vaccination date, POST for send the data to a database
+//Without database we can save in local storage or create PatientContext and PatientContextProvider with createContext() hook and save date.
