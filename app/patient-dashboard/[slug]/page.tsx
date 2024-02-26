@@ -27,7 +27,6 @@ export default function Page({ params }: { params: { slug: string } }) {
       setPatient(patientById);
     })();
   }, [params.slug]);
-  console.log(patient, params.slug);
 
   return (
     <main className="w-full md:w-2/3 p-16 overflow-hidden m-auto bg-white">

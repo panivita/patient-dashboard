@@ -26,7 +26,7 @@ export const PatientDetailsSection = ({
   const patientColor = getPatientColor(color);
   const patientName = `${firstName} ${lastName}`;
   return (
-    <section className="py-6 flex gap-lg">
+    <section className="py-6 flex flex-col md:flex-row gap-lg">
       <img src="../img/default-user.png" alt="default user logo" />
       <div className="p-8">
         <p>Patient Name: {patientName};</p>
