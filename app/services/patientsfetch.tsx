@@ -34,8 +34,11 @@ const PatientsFetch = () => {
             color = "yellow";
           }
         }
-
-        return { ...patients, age: age, color: color, id: index + 1 };
+        const saved = localStorage.getItem("bookedDate");
+        const savedDate = saved!== null && JSON.parse(saved);
+        const bookedDate = index === Number(savedDate.id) ? savedDate.startDate : '';
+        console.log(savedDate)
+        return { ...patients, age: age, color: color, id: index, bookedDate: bookedDate };
       });
       resolve({ patients: patientsWithAge });
     }, 500);

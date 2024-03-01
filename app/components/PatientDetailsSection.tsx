@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from 'clsx';
 import { getPatientColor } from '../utils/getPatientColor';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 type PatientDetailsSectionProps = {
   firstName: string;
@@ -26,6 +27,13 @@ export const PatientDetailsSection = ({
   const [startDate, setStartDate] = useState(new Date());
   const patientColor = getPatientColor(color);
   const patientName = `${firstName} ${lastName}`;
+  const pathname = usePathname();
+  const id = pathname.replace(/([/])/g,"");
+  
+  useEffect(() => {
+    localStorage.setItem("bookedDate", JSON.stringify({startDate, id}));
+  }, [id, startDate]);
+
   return (
     <section className='py-6 flex flex-col md:flex-row gap-lg'>
       <img src='../img/default-user.png' alt='default user logo' />

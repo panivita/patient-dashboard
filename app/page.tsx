@@ -10,6 +10,7 @@ interface IPatient {
   age: string;
   color: string;
   id: string | number;
+  bookedDate: string;
 }
 
 export default function Page() {

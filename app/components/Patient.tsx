@@ -9,6 +9,7 @@ type PatientProps = {
   age: string;
   color: string;
   id: string | number;
+  bookedDate: string;
 };
 
 export const Patient = ({
@@ -18,9 +19,11 @@ export const Patient = ({
   age,
   color,
   id,
+  bookedDate
 }: PatientProps) => {
   const patientColor = getPatientColor(color);
   const patientName = `${firstName} ${lastName}`;
+  const booked = new Date(bookedDate).toLocaleDateString('en-GB');
   return (
     <Link
       key={id}
@@ -31,6 +34,7 @@ export const Patient = ({
       <p>
         {age}, {sex}
       </p>
+      {bookedDate && <p>Next appoinment: {booked}</p>}
     </Link>
   );
 };
