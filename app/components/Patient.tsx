@@ -25,7 +25,7 @@ export const Patient = ({
     <Link
       key={id}
       className={clsx("rounded-xl p-8 cursor-pointer", patientColor)}
-      href={`/patient-dashboard/${id}`}
+      href={`/${id}`}
     >
       <big>{patientName}</big>
       <p>
@@ -34,5 +34,3 @@ export const Patient = ({
     </Link>
   );
 };
-
-//if patient have booked  date for vaccination (fetch database or check localstorage or using PatientContext), we will also display it here

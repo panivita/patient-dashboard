@@ -1,8 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import PatientsFetch from "../../services/patientsfetch";
-import { getPatientColor } from "@/app/utils/getPatientColor";
-import clsx from "clsx";
+import PatientsFetch from "../services/patientsfetch";
 import { PatientDetailsSection } from "@/app/components/PatientDetailsSection";
 
 interface IPatient {
@@ -29,8 +27,8 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, [params.slug]);
 
   return (
-    <main className="w-full md:w-2/3 p-16 overflow-hidden m-auto bg-white">
+    <>
       {patient && <PatientDetailsSection {...patient} />}
-    </main>
+    </>
   );
 }
