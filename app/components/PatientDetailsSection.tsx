@@ -25,14 +25,21 @@ export const PatientDetailsSection = ({
   isVaccinated,
 }: PatientDetailsSectionProps) => {
   const [startDate, setStartDate] = useState(new Date());
+  const [booked, setBooked] = useState(false);
   const patientColor = getPatientColor(color);
   const patientName = `${firstName} ${lastName}`;
   const pathname = usePathname();
-  const id = pathname.replace(/([/])/g,"");
-  
+  const id = pathname.replace(/([/])/g, '');
+
   useEffect(() => {
-    localStorage.setItem("bookedDate", JSON.stringify({startDate, id}));
-  }, [id, startDate]);
+    if (booked) {
+      const previouslyBookedDate = localStorage.getItem('bookedDate') ? localStorage.getItem('bookedDate') : '[]';
+      const datesList = previouslyBookedDate !== null && JSON.parse(previouslyBookedDate);
+
+      datesList.push({ startDate, id });
+      localStorage.setItem('bookedDate', JSON.stringify(datesList));
+    }
+  }, [booked, id, startDate]);
 
   return (
     <section className='py-6 flex flex-col md:flex-row gap-lg'>
@@ -48,7 +55,13 @@ export const PatientDetailsSection = ({
         {!isVaccinated ? (
           <div className='flex gap-4'>
             <p className='self-center mt-4'>Choose time for next booking:</p>
-            <DatePicker selected={startDate} onChange={(date: SetStateAction<any>) => setStartDate(date)} />
+            <DatePicker
+              selected={startDate}
+              onChange={(date: SetStateAction<any>) => {
+                setStartDate(date);
+                setBooked(true);
+              }}
+            />
           </div>
         ) : null}
       </div>

@@ -1,5 +1,5 @@
-import { PatientsData } from "../data/patients";
-import { getAge, getVactinationAge } from "../utils/getAge";
+import { PatientsData } from '../data/patients';
+import { getAge, getVactinationAge } from '../utils/getAge';
 
 const PatientsFetch = () => {
   const data = PatientsData();
@@ -11,33 +11,31 @@ const PatientsFetch = () => {
         return age < 16; // Only patients below 16 years of age should be displayed, I think 16 years patients  not should be displayed, but if I understand not correct we will need change condition to  age <= 16
       });
       const patientsWithAge = patients.map((patients, index) => {
-        let color = "";
+        let color = '';
         const age = getAge(patients.birthDate);
         const vactAge =
-          patients.vaccinationDate !== null
-            ? getVactinationAge(patients.birthDate, patients.vaccinationDate)
-            : null;
+          patients.vaccinationDate !== null ? getVactinationAge(patients.birthDate, patients.vaccinationDate) : null;
         if (vactAge !== null && patients.isVaccinated) {
           if (
-            (patients.sex === "male" && vactAge <= 13 && vactAge >= 11) ||
-            (patients.sex === "female" && vactAge <= 9 && vactAge >= 7)
+            (patients.sex === 'male' && vactAge <= 13 && vactAge >= 11) ||
+            (patients.sex === 'female' && vactAge <= 9 && vactAge >= 7)
           ) {
-            color = "blue";
+            color = 'blue';
           } else {
-            color = "red";
+            color = 'red';
           }
         } else {
           if (
-            (patients.sex === "male" && age <= 13 && age >= 11) ||
-            (patients.sex === "female" && age <= 9 && age >= 7)
+            (patients.sex === 'male' && age <= 13 && age >= 11) ||
+            (patients.sex === 'female' && age <= 9 && age >= 7)
           ) {
-            color = "yellow";
+            color = 'yellow';
           }
         }
-        const saved = localStorage.getItem("bookedDate");
-        const savedDate = saved!== null && JSON.parse(saved);
-        const bookedDate = index === Number(savedDate.id) ? savedDate.startDate : '';
-        console.log(savedDate)
+        const saved = localStorage.getItem('bookedDate');
+        const savedDate = saved !== null && JSON.parse(saved);
+        const bookedDateList = savedDate.find((datesList: { id: string | number }) => Number(datesList.id) === index);
+        const bookedDate = bookedDateList ? bookedDateList.startDate : '';
         return { ...patients, age: age, color: color, id: index, bookedDate: bookedDate };
       });
       resolve({ patients: patientsWithAge });
