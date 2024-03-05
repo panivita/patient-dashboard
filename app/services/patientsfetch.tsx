@@ -1,20 +1,22 @@
 import { PatientsData } from '../data/patients';
-import { getAge, getVactinationAge } from '../utils/getAge';
+import { getAge } from '../utils/getAge';
 
 const PatientsFetch = () => {
   const data = PatientsData();
 
   const patientsPromise: Promise<any> = new Promise((resolve) => {
     setTimeout(() => {
+      const dateNow = Date.now();
       const patients = data.filter(({ birthDate }) => {
-        const age = getAge(birthDate);
-        return age < 16; // Only patients below 16 years of age should be displayed, I think 16 years patients  not should be displayed, but if I understand not correct we will need change condition to  age <= 16
+        const age = getAge(birthDate, dateNow);
+        return age < 16;
       });
       const patientsWithAge = patients.map((patients, index) => {
         let color = '';
-        const age = getAge(patients.birthDate);
+        const age = getAge(patients.birthDate, dateNow);
+        const vacDate = patients.vaccinationDate !== null && new Date(patients.vaccinationDate).getTime()
         const vactAge =
-          patients.vaccinationDate !== null ? getVactinationAge(patients.birthDate, patients.vaccinationDate) : null;
+          patients.vaccinationDate !== null ? getAge(patients.birthDate, vacDate) : null;
         if (vactAge !== null && patients.isVaccinated) {
           if (
             (patients.sex === 'male' && vactAge <= 13 && vactAge >= 11) ||
